@@ -2,6 +2,8 @@ import urllib.request
 import json
 from datetime import datetime, timezone
 import requests
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 
 req = urllib.request.Request("http://api.open-notify.org/iss-now.json")
 response = urllib.request.urlopen(req)
@@ -32,3 +34,26 @@ if response.status_code == 200:
         print(f"- {person['name']} ({person['craft']})")
 else:
     print("Échec de la récupération des données.")
+
+# Initialisation du géocodeur
+geolocator = Nominatim(user_agent="iss_tracker")
+
+# Récupérer la position de l'ISS
+response = requests.get("http://api.open-notify.org/iss-now.json")
+if response.status_code == 200:
+    data = response.json()
+    latitude = float(data["iss_position"]["latitude"])
+    longitude = float(data["iss_position"]["longitude"])
+
+    # Trouver le pays au-dessus duquel se trouve l'ISS
+    try:
+        location = geolocator.reverse((latitude, longitude), language="en")
+        if location and "country" in location.raw["address"]:
+            country = location.raw["address"]["country"]
+            print(f"L'ISS se trouve actuellement au-dessus du pays : {country}.")
+        else:
+            print("L'ISS est actuellement au-dessus d'une zone non identifiable (océan ou autre).")
+    except GeocoderTimedOut:
+        print("Le service de géocodage a expiré. Réessayez.")
+else:
+    print("Échec de la récupération des données de position.")

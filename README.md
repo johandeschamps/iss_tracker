@@ -20,3 +20,5 @@ et la liste de l'équipage en orbite.
 ```
 pip install -r requirements.txt
 ```
+### 4. Démarrer l'application
+* Lancer l'application : `python iss_tracker.py`

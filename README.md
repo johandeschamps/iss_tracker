@@ -1,7 +1,7 @@
-# ISS_tracker
+# International Space Station tracker
 
-Application pour suivre la position actuel de l'ISS (International Space Station) 
-et la liste de l'équipage en orbite.
+l'application à pour but de renseigner la position actuel de l'ISS (International Space Station) 
+et la liste de son équipage en orbite.
 
 ## Installation
 

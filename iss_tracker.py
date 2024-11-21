@@ -5,6 +5,7 @@ import requests
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
+# Récupérer la position actuelle de l'ISS
 req = urllib.request.Request("http://api.open-notify.org/iss-now.json")
 response = urllib.request.urlopen(req)
 
